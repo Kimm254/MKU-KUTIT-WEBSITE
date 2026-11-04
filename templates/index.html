@@ -1,9 +1,17 @@
 {% extends "base.html" %}
 {% block title %}MKU KUTIT | Students Association{% endblock %}
 {% block content %}
-<section class="hero">
-  <div class="hero-copy"><span class="eyebrow">MOUNT KENYA UNIVERSITY</span><h1>Culture. Unity.<br><em>One KUTIT family.</em></h1><p>Connect with fellow students, celebrate our culture, take part in activities and build lasting friendships.</p><div class="hero-actions"><a class="btn primary" href="#register">Become a member</a><a class="btn ghost" href="#activities">Explore activities</a></div></div>
-  <div class="hero-art"><div class="hero-orbit"></div><div class="hero-letter">K</div><div class="hero-sticker">TOGETHER<br>WE BELONG</div></div>
+<section class="hero" style="background: linear-gradient(90deg, rgba(0,0,0,.75), rgba(0,0,0,.2)), url('{{ url_for('static', filename='images/kutit-cover.jpg') }}') center/cover no-repeat;">
+  <div class="hero-copy">
+    <span class="eyebrow">MOUNT KENYA UNIVERSITY</span>
+    <h1>Culture. Unity.<br><em>One KUTIT family.</em></h1>
+    <p>Connect, celebrate our culture and build lasting friendships.</p>
+    <div class="hero-actions">
+      <a class="btn primary" href="#register">Become a member</a>
+      <a class="btn ghost" href="#activities">Explore activities</a>
+    </div>
+  </div>
+</section>div class="hero-art"><div class="hero-orbit"></div><div class="hero-letter">K</div><div class="hero-sticker">TOGETHER<br>WE BELONG</div></div>
 </section>
 <section class="stats-strip"><div><strong>01</strong><span>One community</span></div><div><strong>∞</strong><span>Shared experiences</span></div><div><strong>100%</strong><span>KUTIT spirit</span></div></section>
 <section class="section" id="activities"><div class="section-heading"><div><span class="eyebrow">WHAT'S HAPPENING</span><h2>Activities & events</h2></div><p>Discover what's coming up in our community.</p></div>

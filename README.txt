@@ -1,52 +1,54 @@
-MKU KUTIT WEBSITE — LOCAL SETUP
-================================
+MKU KUTIT WEBSITE + ADMIN DASHBOARD
+===================================
 
-WHAT IS INCLUDED
-- Flask-powered responsive website
-- About, activities, events and contact sections
-- Student registration form
-- Registrations saved locally to data/registrations.csv
-- Mobile-friendly navigation
+FEATURES
+- Public student registration form
+- Database-backed member records (PostgreSQL on Render; SQLite locally)
+- Admin login
+- Member search
+- Payment status tracking (manual Paid/Pending)
+- CSV export
+- Responsive public website
 
-RUN ON WINDOWS (Python already installed)
-1. Extract this ZIP into a folder, for example Desktop\MKU_KUTIT_Website.
-2. Open that folder in File Explorer.
-3. Click the address bar, type cmd, and press Enter.
-4. Run these commands:
-
+LOCAL RUN (Windows)
+1. Extract this ZIP.
+2. Open the extracted folder in File Explorer.
+3. Click the address bar, type cmd, press Enter.
+4. Run:
    py -m pip install -r requirements.txt
    py app.py
+5. Visit http://127.0.0.1:5000
+6. Local SQLite database is created as kutit_local.db.
 
-   If "py" does not work, try:
-   python -m pip install -r requirements.txt
-   python app.py
+ADMIN LOGIN SETUP
+For local testing, set environment variables in the same CMD window before starting:
+   set ADMIN_USERNAME=kutitadmin
+   set ADMIN_PASSWORD=Choose-A-Long-Unique-Password
+   set SECRET_KEY=Use-A-Long-Random-Secret-Value
+   py app.py
 
-5. Open this address in your browser:
-   http://127.0.0.1:5000
+Open:
+   http://127.0.0.1:5000/admin
 
-6. Keep the Command Prompt window open while using the website.
-   Press CTRL+C in that window to stop the server.
+RENDER DEPLOYMENT
+1. Replace the files in your existing GitHub repository with the contents of this ZIP.
+2. Commit the changes. Render should redeploy automatically.
+3. In Render, create a PostgreSQL database (New + -> PostgreSQL).
+4. Copy its Internal Database URL.
+5. Open your web service -> Environment and add:
+   DATABASE_URL = [Internal Database URL]
+   ADMIN_USERNAME = [your chosen admin username]
+   ADMIN_PASSWORD = [a long unique password]
+   SECRET_KEY = [a long random secret]
+6. Save changes / redeploy.
+7. Visit https://YOUR-SERVICE.onrender.com/admin
 
-REGISTRATION DATA
-Submitted registrations are stored in:
-data/registrations.csv
-
-PAYMENTS
-This version collects registration details only. It does NOT initiate M-PESA STK Push
-or automatically confirm payments. To enable real M-PESA payments, the association
-will need an approved Daraja account, registered callback URL, business credentials,
-and a secure server configuration. Do not put payment passwords or API keys in HTML.
-
-DEPLOYMENT
-For Render or another Python host:
-- Build command: pip install -r requirements.txt
-- Start command: gunicorn app:app
-- Add gunicorn to requirements.txt before deploying:
-  Flask>=3.0,<4.0
-  gunicorn>=22.0,<24.0
-
-CUSTOMISING
-- Edit page content in templates/index.html
-- Edit colours/layout in static/style.css
-- Edit behaviour in static/script.js
-- Replace the placeholder event details with confirmed association information.
+IMPORTANT SECURITY & DATA NOTES
+- Do not share ADMIN_PASSWORD or SECRET_KEY.
+- Do not put secrets in HTML, GitHub files, or screenshots.
+- Use a strong, unique admin password.
+- Use the PostgreSQL Internal Database URL in the Render web service environment.
+- Confirm the PostgreSQL database is in the same Render region as the web service.
+- Existing registrations stored in the old CSV or temporary Render filesystem are NOT automatically imported into the new database. Export/back up any existing registrations before replacing the old app.
+- The dashboard's Paid/Pending field is manually set by an authorised admin. It does NOT confirm M-PESA payments automatically.
+- For live production use, configure database backups and privacy/access procedures for student data.

@@ -170,7 +170,7 @@ def register():
         db.session.rollback()
         flash("That registration number may already be registered. Please check it or contact the KUTIT team.", "error")
         return redirect(url_for("home") + "#register")
-    flash(f"Congratulations, {name}! Your registration has been received successfully. Welcome to the MKU KUTIT family! We are excited to have you with us. Keep an eye on official KUTIT announcements for upcoming activities and updates.", "success")
+    flash("Registration received! The KUTIT team will share payment confirmation details.", "success")
     return redirect(url_for("home") + "#register")
 
 

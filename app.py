@@ -32,15 +32,12 @@ if os.environ.get("RENDER"):
 
 database_url = os.environ.get("DATABASE_URL", "sqlite:///kutit_local.db")
 
-# Render PostgreSQL connection URL compatibility
+# PostgreSQL URL compatibility for psycopg2-binary on Render.
+# Local development defaults to SQLite and does not need a PostgreSQL driver.
 if database_url.startswith("postgres://"):
-    database_url = database_url.replace(
-        "postgres://", "postgresql+psycopg://", 1
-    )
-elif database_url.startswith("postgresql://") and "+psycopg" not in database_url:
-    database_url = database_url.replace(
-        "postgresql://", "postgresql+psycopg://", 1
-    )
+    database_url = database_url.replace("postgres://", "postgresql+psycopg2://", 1)
+elif database_url.startswith("postgresql://"):
+    database_url = database_url.replace("postgresql://", "postgresql+psycopg2://", 1)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = database_url
 db = SQLAlchemy(app)

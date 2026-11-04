@@ -1,43 +1,51 @@
 # MKU KUTIT Website
 
-A Flask website with public membership registration and a protected administration area.
-
-## Features
-- Public homepage and membership registration
-- Friendly congratulations message after registration (no payment step)
-- Admin dashboard overview
-- Member directory, search, CSV export and manual payment-status tracking
-- Activities and events management with optional poster upload
-- Announcements management
-- Gallery uploads
+## Included features
+- Public KUTIT homepage and membership registration
+- Congratulations/welcome message after successful registration (no payment prompt)
+- Protected admin login and dashboard
+- Member list, search, CSV export and manual payment-status tracking
+- Activities/events with optional poster upload
+- Announcements
+- Event gallery uploads
 - Executive committee management
-- SQLite for local testing and PostgreSQL support on Render
+- SQLite for local testing; PostgreSQL for Render deployment
 
-## Run locally (Windows)
-1. Install Python 3.11 or newer.
-2. Open Command Prompt in this folder.
-3. Create an environment: `py -m venv .venv`
-4. Activate it: `.venv\\Scripts\\activate`
-5. Install packages: `pip install -r requirements.txt`
-6. Copy `.env.example` to `.env` and set a strong `SECRET_KEY`, `ADMIN_USERNAME`, and `ADMIN_PASSWORD`.
-7. Set the environment variables in your terminal, or use a local environment-variable manager.
-8. Start: `python app.py`
-9. Visit `http://127.0.0.1:5000`
+## Run locally on Windows
+1. Extract this ZIP.
+2. Open PowerShell or Command Prompt inside the extracted `MKU_KUTIT_Working_Website` folder.
+3. Run `py -m pip install -r requirements.txt`
+4. Run `py app.py`
+5. Open `http://127.0.0.1:5000`
 
-The app reads environment variables directly. For local Windows Command Prompt, set them before running:
-`set SECRET_KEY=your-long-secret`
-`set ADMIN_USERNAME=admin`
-`set ADMIN_PASSWORD=your-strong-password`
+The local version uses SQLite automatically. It does not install a PostgreSQL driver, avoiding the Python 3.15 `psycopg[binary]` wheel error.
 
-## Deploy to Render
-- Push the contents of this folder to a new GitHub repository.
-- Create a Render Web Service connected to that repository.
-- Build command: `pip install -r requirements.txt`
-- Start command: `gunicorn app:app`
-- Add environment variables: `SECRET_KEY`, `ADMIN_USERNAME`, `ADMIN_PASSWORD`, and `DATABASE_URL`.
-- For persistent member data, create a Render PostgreSQL database and use its **internal** connection URL as `DATABASE_URL`.
+## Admin login locally
+Set credentials before starting the app.
 
-Do not delete an existing production database if it contains registrations. This fresh project creates missing tables; it does not intentionally drop tables.
+PowerShell:
+```powershell
+$env:SECRET_KEY="replace-with-a-long-random-secret"
+$env:ADMIN_USERNAME="your-admin-name"
+$env:ADMIN_PASSWORD="choose-a-strong-password"
+py app.py
+```
 
-## Admin
-Open `/admin/login` and use the username and password configured in the environment variables. Do not use the example credentials in production.
+Then visit `http://127.0.0.1:5000/admin/login`.
+
+## Deploy to Render with PostgreSQL
+1. Push the extracted project files to a GitHub repository.
+2. Create a Render Web Service from that repository.
+3. Set Build Command to: `pip install -r requirements-render.txt`
+4. Set Start Command to: `gunicorn app:app`
+5. Add environment variables:
+   - `SECRET_KEY` = a long random secret
+   - `ADMIN_USERNAME` = your chosen admin username
+   - `ADMIN_PASSWORD` = your strong admin password
+   - `DATABASE_URL` = your Render PostgreSQL **Internal Database URL**
+6. Deploy.
+
+`requirements-render.txt` installs `psycopg2-binary` for PostgreSQL. The app converts Render's PostgreSQL URL to the matching SQLAlchemy driver.
+
+## Important data note
+Do not replace or delete an existing production database if it contains member registrations. `db.create_all()` creates missing tables but does not migrate changed columns or remove old data. Back up an existing database before changing deployments.

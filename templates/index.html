@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="MKU KUTIT Students Association — culture, talent, community and events.">
+  <title>MKU KUTIT | Students Association</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#"><span class="brand-mark">K</span><span>MKU <b>KUTIT</b><small>STUDENTS ASSOCIATION</small></span></a>
+  <button class="menu-toggle" aria-label="Toggle navigation" onclick="toggleMenu()">☰</button>
+  <nav id="nav">
+    <a href="#about">About</a><a href="#activities">Activities</a><a href="#events">Events</a>
+    <a href="#register" class="nav-cta">Join KUTIT</a>
+  </nav>
+</header>
+
+<main>
+<section class="hero">
+  <div class="hero-content">
+    <p class="eyebrow">MOUNT KENYA UNIVERSITY</p>
+    <h1>Culture. Talent.<br><span>One Community.</span></h1>
+    <p class="hero-copy">A home for culture, creativity, friendship and student empowerment. Connect, participate and make campus memories with MKU KUTIT.</p>
+    <div class="hero-actions"><a class="btn btn-gold" href="#register">Become a member <span>↗</span></a><a class="text-link" href="#about">Discover KUTIT ↓</a></div>
+    <div class="hero-note"><span class="live-dot"></span> Celebrating culture and student talent</div>
+  </div>
+  <div class="hero-art" aria-label="Decorative cultural pattern">
+    <div class="sun"></div><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+    <div class="art-word">KUTIT</div><div class="art-sub">TOGETHER WE RISE</div>
+    <div class="art-stamp">MKU<br>COMMUNITY</div>
+  </div>
+</section>
+
+<section class="stats">
+  <div><strong>01</strong><span>Community first</span></div><div><strong>02</strong><span>Culture in action</span></div>
+  <div><strong>03</strong><span>Talent unleashed</span></div><div><strong>04</strong><span>Memories made</span></div>
+</section>
+
+<section class="section about" id="about">
+  <div class="section-tag">WHO WE ARE</div>
+  <div class="section-grid"><h2>More than an association.<br><em>A place to belong.</em></h2>
+    <div><p>MKU KUTIT brings students together through cultural expression, social connection, talent development and shared experiences. We create opportunities for members to participate, learn, lead and celebrate.</p>
+    <p class="muted">Whether you love dancing, music, performance, planning events or simply meeting people, there is room for you here.</p></div>
+  </div>
+</section>
+
+<section class="section dark-section" id="activities">
+  <div class="section-tag light-tag">WHAT WE DO</div><h2>Find your rhythm.</h2>
+  <div class="cards">
+    <article class="activity-card"><span class="card-number">01 / CULTURE</span><div class="activity-icon">✳</div><h3>Cultural expression</h3><p>Celebrate heritage, traditions, language, fashion and the diversity that makes our community special.</p></article>
+    <article class="activity-card"><span class="card-number">02 / TALENT</span><div class="activity-icon">♫</div><h3>Dance & performance</h3><p>Take part in dance sessions, performances, music and creative showcases.</p></article>
+    <article class="activity-card"><span class="card-number">03 / COMMUNITY</span><div class="activity-icon">◎</div><h3>Events & connection</h3><p>Meet fellow students, volunteer, build friendships and help bring campus events to life.</p></article>
+  </div>
+</section>
+
+<section class="section events" id="events">
+  <div class="section-tag">GET INVOLVED</div><div class="events-head"><h2>What's happening?</h2><p>Keep an eye on this space for upcoming meetings, practices, fundays and association announcements.</p></div>
+  <div class="event-row"><div class="event-date"><strong>MKU</strong><span>CAMPUS</span></div><div class="event-info"><h3>Weekly practice & meetups</h3><p>Check the official KUTIT group for the confirmed day, time and venue.</p></div><span class="event-arrow">↗</span></div>
+  <div class="event-row"><div class="event-date"><strong>JOIN</strong><span>US</span></div><div class="event-info"><h3>New member registration</h3><p>Register your details below and the team will guide you through the next steps.</p></div><a class="event-arrow" href="#register">↗</a></div>
+</section>
+
+<section class="section register-section" id="register">
+  <div class="register-copy"><div class="section-tag light-tag">BECOME PART OF US</div><h2>Your people.<br>Your culture.<br><em>Your KUTIT.</em></h2><p>Fill in the form to express your interest in joining the MKU KUTIT community.</p>
+    <div class="contact-box"><span>ORGANISATION CONTACT</span><strong>Chairperson: Kemboi</strong><a href="tel:+254710190854">+254 710 190 854</a></div>
+  </div>
+  <div class="form-panel">
+    <h3>Member registration</h3><p class="form-intro">Fields marked * are required.</p>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}{% for category, message in messages %}<div class="alert {{ category }}">{{ message }}</div>{% endfor %}{% endif %}
+    {% endwith %}
+    <form action="{{ url_for('register') }}" method="POST">
+      <label>Full name *<input name="name" required placeholder="Your full name"></label>
+      <label>Registration number *<input name="reg_no" required placeholder="e.g. XXXXX/2026"></label>
+      <label>Phone number *<input name="phone" required type="tel" placeholder="07XX XXX XXX"></label>
+      <div class="form-two"><label>Course<input name="course" placeholder="Your course"></label><label>Year of study<select name="year"><option value="">Select year</option><option>Year 1</option><option>Year 2</option><option>Year 3</option><option>Year 4</option><option>Other</option></select></label></div>
+      <button class="btn btn-gold submit-btn" type="submit">Submit registration <span>→</span></button>
+      <p class="privacy-note">Your details are collected for KUTIT membership follow-up. Please submit only your own information.</p>
+    </form>
+  </div>
+</section>
+</main>
+<footer><a class="brand footer-brand" href="#"><span class="brand-mark">K</span><span>MKU <b>KUTIT</b><small>STUDENTS ASSOCIATION</small></span></a><p>Culture brings us together. Community moves us forward.</p><span class="copyright">© 2026 MKU KUTIT Students Association</span></footer>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
